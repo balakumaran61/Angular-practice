@@ -1,0 +1,21 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';  
+import { RouterModule, Routes } from '@angular/router';
+import { StudentDetailsComponent } from './student-details/student-details.component'; // Update this line
+
+const routes: Routes = [
+  { path: 'student-details', component: StudentDetailsComponent },
+  // Add other student module routes here
+];
+
+
+@NgModule({
+  declarations: [],
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule
+  ],
+  exports: [RouterModule],
+
+})
+export class StudentRoutingModule { }

@@ -1,0 +1,31 @@
+    
+    <div class="container mt-5">
+        <h2>Student Information Table</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope ="col">S.No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Roll No</th>
+                    <th scope="col">Actions</th> <!-- New column for Actions -->
+
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                <!-- Rows  dynamically added  -->   
+                <tr *ngFor="let student of students; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.age }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.rollno }}</td>
+                    <td>
+                        <button class="btn btn-primary" >Edit</button>
+                      </td>
+                  </tr>
+            </tbody>
+        </table>   
+        
+    </div>
