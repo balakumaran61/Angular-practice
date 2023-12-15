@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentService } from 'src/app/services/student.service'; 
-
-
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-details',
@@ -12,8 +10,10 @@ import { StudentService } from 'src/app/services/student.service';
 export class StudentDetailsComponent implements OnInit  
  {   
   students: any[] = [];
+  currentPage: number = 0;
+  pageSize: number = 10;
 
-  constructor(private studentService: StudentService) { }
+  constructor(private studentService: StudentService,private router: Router) { }
 
   ngOnInit(): void 
   {   
@@ -30,6 +30,10 @@ export class StudentDetailsComponent implements OnInit
         console.error('Error fetching student details:', error);
       }
     );
+  }   
+  editStudentProfile(student: any) {
+    // Pass the student's rollno to the profile component
+    this.router.navigate(['/students/student-profile', student.rollno]);
   }
 
   

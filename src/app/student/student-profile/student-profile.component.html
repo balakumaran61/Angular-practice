@@ -1,0 +1,52 @@
+<!-- student-profile.component.html -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Student Profile</h2>
+  
+    <div class="row justify-content-center">
+      <div class="col-md-8"> <!-- Adjusted width to 8 columns -->
+        <div class="card">
+          <div class="card-body">
+            <form #studentForm="ngForm" (ngSubmit)="updateStudent()">   
+              <div class="form-group mb-10">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" [(ngModel)]="student.name" class="form-control"
+                  pattern="^[a-zA-Z ]+$" required>
+                <div *ngIf="studentForm.controls['name'].hasError('pattern')" class="text-danger">
+                  Name should only contain letters and spaces.
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" [(ngModel)]="student.age" class="form-control" min="1" max="200"
+                  required>
+                <div *ngIf="studentForm.controls['age'].hasError('min') || studentForm.controls['age'].hasError('max')"
+                  class="text-danger">
+                  Age should be between 1 and 200.
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" [(ngModel)]="student.email" class="form-control" required
+                  email>
+                <div *ngIf="studentForm.controls['email'].hasError('required')" class="text-danger">
+                  Email is required.
+                </div>
+                <div *ngIf="studentForm.controls['email'].hasError('email')" class="text-danger">
+                  Please enter a valid email address.
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="rollno">Roll No:</label>
+                <input type="text" id="rollno" name="rollno" [(ngModel)]="student.rollno" class="form-control" required
+                  disabled>
+              </div>
+              <div class="form-group text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg mr-3" [disabled]="studentForm.invalid">Update</button>
+                <button type="button" class="btn btn-danger btn-lg" (click)="cancelUpdate()">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
