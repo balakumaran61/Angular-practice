@@ -1,6 +1,14 @@
     
     <div class="container mt-5">
         <h2>Student Information Table</h2>
+        <label for="pageSize">No of Entries :</label>
+        <select id="pageSize" [(ngModel)]="selectedPageSize" (change)="onPageSizeChange()">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+        
         <table class="table">
             <thead>
                 <tr>
@@ -27,5 +35,17 @@
                   </tr>
             </tbody>
         </table>   
+       <!-- student-details.component.html -->
+
+        <div class="d-flex justify-content-center mt-3">
+            <button class="btn btn-primary me-2" (click)="prevPage()" [disabled]="currentPage === 0">Previous</button>
+            <span class="align-self-center">currentPage : {{ currentPage }}</span>
+            <button class="btn btn-primary ms-2" (click)="nextPage()" [disabled]="currentPage === totalPages-1">Next</button>
+        </div>  
+    
+        
+          
+        
+  
         
     </div>

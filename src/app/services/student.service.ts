@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';  
 import { HttpClient } from '@angular/common/http';  
 import { Observable , throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -12,10 +12,17 @@ export class StudentService {
 
   constructor(private http: HttpClient) { }     
   
-  getStudentDetails(): Observable<any[]> {
-    const url = `${this.apiUrl}/studentDetail`;
-    return this.http.get<any[]>(url);
-  }      
+ // student.service.ts
+ getStudentDetails(page: number, size: number): Observable<{ content: any[], totalPages: number }> {
+  const url = `${this.apiUrl}/student-pagination?page=${page}&size=${size}`;
+  return this.http.get<any>(url).pipe(
+    map((response) => ({
+      content: response.content, // Extract the 'content' property
+      totalPages: response.totalPages // Extract the 'totalPages' property
+    }))
+  );
+}
+    
 
   getStudentByRollNo(rollno: string): Observable<any> {
     const url = `${this.apiUrl}/studentNameAndRollno/${rollno}`;
