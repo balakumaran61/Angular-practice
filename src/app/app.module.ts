@@ -9,6 +9,9 @@ import { HomeComponent } from './home/home.component';
 import { CourseComponent } from './course/course.component';
 import { GuardianComponent } from './guardian/guardian.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'; 
+
+
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule, 
     StudentModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
+
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

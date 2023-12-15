@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StudentDetailsComponent } from './student-details/student-details.component';
 import { StudentRoutingModule } from './student-routing.module';
+import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { FormsModule } from '@angular/forms'; 
 
 
 const routes: Routes = [
@@ -13,10 +15,13 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     StudentDetailsComponent,
+    StudentProfileComponent,
   ],
   imports: [
     CommonModule,
-    StudentRoutingModule,   
+    StudentRoutingModule,  
+    FormsModule,
+
 
   ]
 })
