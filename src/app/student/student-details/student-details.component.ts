@@ -17,7 +17,10 @@ export class StudentDetailsComponent implements OnInit
   pageSize = 10;
   totalPages=0; 
 
-  selectedPageSize: number = 10;
+  selectedPageSize: number = 10;    
+  selectedColumn: string | null = null;
+  sortOrder: 'asc' | 'desc' = 'asc';
+
 
 
 
@@ -70,6 +73,43 @@ export class StudentDetailsComponent implements OnInit
       this.fetchStudentDetails(this.currentPage, this.pageSize);
     }
   }   
+  // ...
+
+sortColumn(column: string, order: 'asc' | 'desc'): void {
+  // Toggle sort order if the same column is clicked
+  if (column === this.selectedColumn) {
+    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+  } else {
+    // Default to ascending order for a new column
+    this.sortOrder = 'asc';
+  }
+
+  this.selectedColumn = column;
+  this.sortRows(column, this.sortOrder);
+}
+
+// ...
+
+
+  private sortRows(column: string, order: 'asc' | 'desc'): void {
+    // Create a copy of the students array to avoid modifying the original data directly
+    const sortedStudents = [...this.students];
+
+    // Use JavaScript's array sort method
+    sortedStudents.sort((a, b) => {
+      // Adjust this logic based on the data type of the column (e.g., string, number)
+      if (a[column] < b[column]) {
+        return order === 'asc' ? -1 : 1;
+      } else if (a[column] > b[column]) {
+        return order === 'asc' ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
+
+    // Update the students array with the sorted data
+    this.students = sortedStudents;
+  }
 
   
   

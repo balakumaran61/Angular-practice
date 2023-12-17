@@ -10,15 +10,48 @@
         </select>
         
         <table class="table">
+            <!-- Update sorting buttons in each column header -->
+<!-- Update sorting buttons in each column header -->
             <thead>
                 <tr>
-                    <th scope ="col">S.No</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Roll No</th>
-                    <th scope="col">Actions</th> <!-- New column for Actions -->
-
+                <th scope="col">
+                    <div>
+                    S.No
+                    </div>
+                </th>
+                <th scope="col">
+                    <div>
+                    Name
+                    <button class="btn btn-primary btn-sort" (click)="sortColumn('name', 'asc')">Up</button>
+                    <button class="btn btn-warning btn-sort" (click)="sortColumn('name', 'desc')">Down</button>
+                    </div>
+                </th>
+                <th scope="col">
+                    <div>
+                    Age
+                    <button class="btn btn-primary btn-sort" (click)="sortColumn('age', 'asc')">Up</button>
+                    <button class="btn btn-warning btn-sort" (click)="sortColumn('age', 'desc')">Down</button>
+                    </div>
+                </th>
+                <th scope="col">
+                    <div>
+                    Email
+                    <button class="btn btn-primary btn-sort" (click)="sortColumn('email', 'asc')">Up</button>
+                    <button class="btn btn-warning btn-sort" (click)="sortColumn('email', 'desc')">Down</button>
+                    </div>
+                </th>
+                <th scope="col">
+                    <div>
+                    Roll No
+                    <button class="btn btn-primary btn-sort" (click)="sortColumn('rollno', 'asc')">Up</button>
+                    <button class="btn btn-warning btn-sort" (click)="sortColumn('rollno', 'desc')">Down</button>
+                    </div>
+                </th>
+                <th scope="col">
+                    <div>
+                    Actions
+                    </div>
+                </th>
                 </tr>
             </thead>
             <tbody id="studentTableBody">
