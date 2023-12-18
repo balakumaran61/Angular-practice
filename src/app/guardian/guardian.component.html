@@ -1,1 +1,30 @@
-<p>guardian works!</p>
+<!-- src/app/components/guardian/guardian.component.html -->
+<div class="container mt-3">
+    <h2>Guardian List</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <!-- Add more columns based on your API response -->
+          <th>Email</th>
+          <th>Phone Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let guardian of guardians; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ guardian.name }}</td>
+          <!-- Display other properties based on your API response -->
+          <td>{{ guardian.email }}</td>
+          <td>{{ guardian.phoneNo }}</td>        </tr>
+      </tbody>
+    </table>
+  
+    <ul class="pagination d-flex justify-content-center">
+        <li class="page-item" *ngFor="let page of getPages()">
+          <a class="page-link" (click)="onPageChange(page)">{{ page + 1 }}</a>
+        </li>
+      </ul>
+  </div>
+  
