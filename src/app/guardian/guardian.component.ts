@@ -12,6 +12,8 @@ export class GuardianComponent implements OnInit {
   currentPage = 0;
   pageSize = 10;
   totalPages = 0;
+  sortBy: string = 'name'; // Default sorting column
+  sortType: string = 'asc'; // Default sorting type
 
   constructor(private guardianService: GuardianService) {}
 
@@ -20,14 +22,22 @@ export class GuardianComponent implements OnInit {
   }
 
   loadGuardians() {
-    this.guardianService.getGuardians(this.currentPage, this.pageSize).subscribe((data) => {
-      this.guardians = data.content;
-      this.totalPages = data.totalPages;
-    });
+    this.guardianService
+      .getGuardians(this.currentPage, this.pageSize, this.sortBy, this.sortType)
+      .subscribe((data) => {
+        this.guardians = data.content;
+        this.totalPages = data.totalPages;
+      });
   }
 
   onPageChange(page: number) {
     this.currentPage = page;
+    this.loadGuardians();
+  }
+
+  sort(column: string, type: string) {
+    this.sortBy = column;
+    this.sortType = type;
     this.loadGuardians();
   }
 
