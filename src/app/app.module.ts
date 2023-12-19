@@ -9,7 +9,8 @@ import { HomeComponent } from './home/home.component';
 import { CourseComponent } from './course/course.component';
 import { GuardianComponent } from './guardian/guardian.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
+import { GuardianModalComponent } from './guardian-modal/guardian-modal.component'; 
 
 
 
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     HeaderComponent,
     HomeComponent,
     CourseComponent,
-    GuardianComponent
+    GuardianComponent,
+    GuardianModalComponent
   ],
   imports: [
     BrowserModule,
