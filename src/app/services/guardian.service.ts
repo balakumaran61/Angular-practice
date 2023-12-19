@@ -21,5 +21,18 @@ export class GuardianService {
       .set('search', search);
 
     return this.http.get(endpoint, { params });
-  }
+  }   
+
+  updateGuardian(email: string, updatedGuardian: any): Observable<any> {
+    const url = `${this.apiUrl}/updateGuardian/${email}`;
+    return this.http.put(url, updatedGuardian);
+  }   
+
+  getStudentInfoByEmail(email: string): Observable<any>
+  {
+    const url=`${this.apiUrl}/studentInfoByGuardianEmail/${email}`;
+    return this.http.get(url);
+    }   
+
+
 }
