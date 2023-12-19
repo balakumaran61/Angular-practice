@@ -11,13 +11,14 @@ export class GuardianService {
 
   constructor(private http: HttpClient) {}
 
-  getGuardians(page: number, size: number, sortBy: string, sortType: string): Observable<any> {
+  getGuardians(page: number, size: number, sortBy: string, sortType: string, search: string): Observable<any> {
     const endpoint = `${this.apiUrl}/guardian-pagination`;
     const params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
       .set('sortBy', sortBy)
-      .set('sortType', sortType);
+      .set('sortType', sortType)
+      .set('search', search);
 
     return this.http.get(endpoint, { params });
   }

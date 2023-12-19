@@ -1,21 +1,42 @@
 <!-- src/app/components/guardian/guardian.component.html -->
-<div class="container mt-3">
+<div class="container mt-3" style="max-width: 800px;">
     <h2>Guardian List</h2>
-    <table class="table">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Search by Name, Email, or Phone" [(ngModel)]="searchText" (input)="onSearchChange()">
+      <div class="input-group-append">
+      </div>
+    </div>
+  
+    <table class="table table-sm">
       <thead>
         <tr>
-          <th>#</th>
-          <th>
-            <button class="btn btn-link" (click)="sort('name', 'asc')">Name ▲</button>
-            <button class="btn btn-link" (click)="sort('name', 'desc')">Name ▼</button>
+          <th style="width: 5%;">#</th>
+          <th style="width: 30%;">
+            <button class="btn btn-link" (click)="sort('name', 'asc')">
+              <i class="bi bi-arrow-up arrow-icon"></i>
+            </button>
+            <button class="btn btn-link" (click)="sort('name', 'desc')">
+              <i class="bi bi-arrow-down arrow-icon"></i>
+            </button>
+            Name
           </th>
-          <th>
-            <button class="btn btn-link" (click)="sort('email', 'asc')">Email ▲</button>
-            <button class="btn btn-link" (click)="sort('email', 'desc')">Email ▼</button>
+          <th style="width: 30%;">
+            <button class="btn btn-link" (click)="sort('email', 'asc')">
+              <i class="bi bi-arrow-up arrow-icon"></i>
+            </button>
+            <button class="btn btn-link" (click)="sort('email', 'desc')">
+              <i class="bi bi-arrow-down arrow-icon"></i>
+            </button>
+            Email
           </th>
-          <th>
-            <button class="btn btn-link" (click)="sort('phoneNo', 'asc')">Phone Number ▲</button>
-            <button class="btn btn-link" (click)="sort('phoneNo', 'desc')">Phone Number ▼</button>
+          <th style="width: 35%;">
+            <button class="btn btn-link" (click)="sort('phoneNo', 'asc')">
+              <i class="bi bi-arrow-up arrow-icon"></i>
+            </button>
+            <button class="btn btn-link" (click)="sort('phoneNo', 'desc')">
+              <i class="bi bi-arrow-down arrow-icon"></i>
+            </button>
+            Phone Number
           </th>
         </tr>
       </thead>
@@ -30,16 +51,16 @@
     </table>
   
     <ul class="pagination d-flex justify-content-center">
-        <li class="page-item" *ngFor="let page of getPages()">
-          <a
-            class="page-link"
-            (click)="onPageChange(page)"
-            [class.active]="page === currentPage"
-            [attr.disabled]="page === currentPage ? true : null"
-          >
-            {{ page + 1 }}
-          </a>
-        </li>
-      </ul>
-    
-</div>
+      <li class="page-item" *ngFor="let page of getPages()">
+        <a
+          class="page-link"
+          (click)="onPageChange(page)"
+          [class.active]="page === currentPage"
+          [attr.disabled]="page === currentPage ? true : null"
+        >
+          {{ page + 1 }}
+        </a>
+      </li>
+    </ul>
+  </div>
+  

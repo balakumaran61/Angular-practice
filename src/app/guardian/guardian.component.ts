@@ -1,6 +1,8 @@
 // src/app/components/guardian/guardian.component.ts
 import { Component, OnInit } from '@angular/core';
 import { GuardianService } from '../services/guardian.service';
+import { NgModel } from '@angular/forms';
+
 
 @Component({
   selector: 'app-guardian',
@@ -12,8 +14,9 @@ export class GuardianComponent implements OnInit {
   currentPage = 0;
   pageSize = 10;
   totalPages = 0;
-  sortBy: string = 'name'; // Default sorting column
-  sortType: string = 'asc'; // Default sorting type
+  sortBy: string = 'name';
+  sortType: string = 'asc'; 
+  searchText: string = '';
 
   constructor(private guardianService: GuardianService) {}
 
@@ -23,7 +26,7 @@ export class GuardianComponent implements OnInit {
 
   loadGuardians() {
     this.guardianService
-      .getGuardians(this.currentPage, this.pageSize, this.sortBy, this.sortType)
+      .getGuardians(this.currentPage, this.pageSize, this.sortBy, this.sortType, this.searchText)
       .subscribe((data) => {
         this.guardians = data.content;
         this.totalPages = data.totalPages;
@@ -43,5 +46,8 @@ export class GuardianComponent implements OnInit {
 
   getPages(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i);
+  }   
+  onSearchChange() {
+    this.loadGuardians();
   }
 }
