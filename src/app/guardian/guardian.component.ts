@@ -20,7 +20,8 @@ export class GuardianComponent implements OnInit {
   formModal:any;  
   selectedGuardian: any={ name: '', email: '', phoneNo: '' }; // This property will hold the selected guardian
   studentInfo: any; // Adjust the type based on the actual response structure
-
+  showSuccessAlert = false;
+  showErrorAlert = false;
 
   constructor(private guardianService: GuardianService) {}
 
@@ -77,9 +78,17 @@ export class GuardianComponent implements OnInit {
       .subscribe(
         () => {
           console.log('Guardian updated successfully!');
-          this.closeModal();
-          this.loadGuardians();
+          this.showSuccessAlert = true;
+          this.showErrorAlert = false;
 
+          // Automatically hide the alert after 5 seconds (adjust as needed)
+          setTimeout(() => {
+            this.showSuccessAlert = false;
+            this.closeModal();
+            this.loadGuardians();
+  
+          }, 1000);
+       
         },
         (error) => {
           console.error('Error updating guardian:', error);
@@ -99,6 +108,7 @@ export class GuardianComponent implements OnInit {
       (error) =>
       {  
         console.error('error in  gettig information', error);
+        
       }
     )
   }
