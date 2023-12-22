@@ -1,4 +1,5 @@
 <!-- header.component.html -->
+<ng-container *ngIf="showHeader">
 <header class="bg-primary text-white text-center py-5">
     <h1 class="display-4">Student Information System</h1>
     <p class="lead">Empowering Education Through Information</p>
@@ -11,7 +12,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item" style="margin-bottom: 10px;">
-                    <a class="nav-link text-white" routerLink="/" style="font-size: 18px;">Home</a>
+                    <a class="nav-link text-white" routerLink="/home" style="font-size: 18px;">Home</a>
                 </li>
                 <li class="nav-item" style="margin-bottom: 10px;">
                     <a class="nav-link text-white" routerLink="/course" style="font-size: 18px;">Courses</a>
@@ -22,7 +23,11 @@
                 <li class="nav-item" style="margin-bottom: 10px;">
                     <a class="nav-link text-white" routerLink="/guardian" style="font-size: 18px;">Guardian</a>
                 </li>
+                <li class="nav-item" style="margin-bottom: 10px;">
+                    <a class="nav-link text-white" routerLink="/auth/login" style="font-size: 18px;">Logout</a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
+</ng-container>
