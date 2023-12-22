@@ -24,8 +24,8 @@ export class LoginComponent implements OnInit {
       (response) => {
         console.log('Login successful:', response);
         alert("successfully signed in");
-        // Redirect to a different page or perform other actions as needed
-        this.router.navigate(['/auth/register']);
+   
+        this.router.navigate(['/home']);
       },
       (error) => {
         alert("error in  signing in");
