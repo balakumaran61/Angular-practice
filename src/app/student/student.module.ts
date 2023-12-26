@@ -5,6 +5,8 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
 import { StudentRoutingModule } from './student-routing.module';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { FormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 const routes: Routes = [
@@ -21,6 +23,7 @@ const routes: Routes = [
     CommonModule,
     StudentRoutingModule,  
     FormsModule,
+    ReactiveFormsModule
 
 
   ]

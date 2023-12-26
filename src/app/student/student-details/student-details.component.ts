@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentService } from 'src/app/services/student.service'; 
 import { Router } from '@angular/router';
-import { Content } from '@angular/compiler/src/render3/r3_ast';  
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';  
+declare var window:any;
+
 
 
 @Component({
@@ -12,30 +14,54 @@ import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 export class StudentDetailsComponent implements OnInit  
  {   
-  students: any[] = [];
+  students: any[] = [];  
+  studentForm !: FormGroup; 
+   // Reactive form for student input
+  newStudentForm!: FormGroup;
   currentPage = 0;
   pageSize = 10;
   totalPages=0; 
+  formModal:any;  
 
   selectedPageSize: number = 10;    
   selectedColumn: string | null = null;
-  sortOrder: 'asc' | 'desc' = 'asc';
+  sortOrder: 'asc' | 'desc' = 'asc';   
+  get userType(): string {
+    // Retrieve user type from local storage
+    return localStorage.getItem('userType') || 'error';
+  }
+  addStudentModalOpen = false;
+
 
 
 
 
   
 
-  constructor(private studentService: StudentService,private router: Router) { }
+  constructor(private studentService: StudentService,private router: Router,private fb: FormBuilder) { }
 
   ngOnInit(): void 
   {   
-    this.fetchStudentDetails(this.currentPage,this.selectedPageSize);
-  }  
+    this.fetchStudentDetails(this.currentPage,this.selectedPageSize);  
+    this.formModal=new window.bootstrap.Modal(
+      document.getElementById("addStudentModal")
+     ); 
+    this.newStudentForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      rollno: ['', Validators.required],
+      age: ['', [Validators.required, Validators.min(1)]],
+    });
+
+    
+  }      
+
+  
   onPageSizeChange(): void {
     // Reset to the first page when page size changes
     this.currentPage = 0;
     this.fetchStudentDetails(this.currentPage, this.selectedPageSize);
+    
   }
 
   fetchStudentDetails(page: number, size: number): void {
@@ -109,8 +135,40 @@ sortColumn(column: string, order: 'asc' | 'desc'): void {
 
     // Update the students array with the sorted data
     this.students = sortedStudents;
-  }
-
+  }  
+  openAddStudentModal() {
+    this.formModal.show()
+  }      
   
+  closeAddStudentModal() {
+    this.formModal.hide();
+    this.newStudentForm.reset();
+
+
+ 
+  }  
+
+
+ addStudent() {
+  // Call the service to add a new student
+  const studentData = this.newStudentForm.value;
+  this.studentService.addStudent(studentData).subscribe(
+    (response) => {
+      console.log('Student added successfully:', response);
+      alert('Student saved successfully');
+      this.closeAddStudentModal();
+    },
+    (error) => {
+      console.error('Error adding student:', error);
+
+      if (error && error.error === 'Rollno already exists') {
+        alert('Error: A user with the same Rollno already exists');
+      } else {
+        alert('Error adding student. Please try again later.');
+      }
+    }
+  );
+}
+
   
 }

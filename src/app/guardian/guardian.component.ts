@@ -21,7 +21,11 @@ export class GuardianComponent implements OnInit {
   selectedGuardian: any={ name: '', email: '', phoneNo: '' }; // This property will hold the selected guardian
   studentInfo: any; // Adjust the type based on the actual response structure
   showSuccessAlert = false;
-  showErrorAlert = false;
+  showErrorAlert = false; 
+  get userType(): string {
+    // Retrieve user type from local storage
+    return localStorage.getItem('userType') || 'error';
+  }
 
   constructor(private guardianService: GuardianService) {}
 
@@ -113,20 +117,5 @@ export class GuardianComponent implements OnInit {
     )
   }
 
-/*
- fetchStudentDetails(page: number, size: number): void {
-    this.studentService.getStudentDetails(page, size).subscribe(
-      (data) => {
-        console.log('API Response:', data);
-        this.students = data.content;
-        this.totalPages = data.totalPages;
-      },
-      (error) => {  
-      
-        console.error('Error fetching student details:', error);
-      }
-    );
-  }
-*/
 
 }

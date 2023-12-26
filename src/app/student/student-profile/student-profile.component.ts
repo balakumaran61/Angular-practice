@@ -59,6 +59,7 @@ export class StudentProfileComponent implements OnInit {
     // Implement the logic to cancel the update
     console.log('Cancel button clicked');
     this.router.navigate(['/student-details']);
-  }
+  }  
+  
 
 }

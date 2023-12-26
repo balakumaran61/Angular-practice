@@ -1,4 +1,4 @@
-<!-- src/app/components/guardian/guardian.component.html -->
+  <!-- src/app/components/guardian/guardian.component.html -->
 <div class="container mt-3" style="max-width: 800px;">
     <h2>Guardian List</h2>
     <div class="input-group mb-3">
@@ -44,7 +44,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let guardian of guardians; let i = index" (dblclick)="openModal(guardian)">
+        <tr *ngFor="let guardian of guardians; let i = index" (dblclick)="userType === 'admin' ? openModal(guardian) : null">
           <td>{{ i + 1 }}</td>
           <td>{{ guardian.name }}</td>
           <td>{{ guardian.email }}</td>
