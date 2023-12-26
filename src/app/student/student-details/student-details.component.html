@@ -8,10 +8,12 @@
             <option value="15">15</option>
             <option value="20">20</option>
         </select>
-        
+        <div class="d-flex justify-content-end mb-3">
+            <button class="btn btn-primary" (click)="openAddStudentModal()">Add New Student</button>
+          </div>
+
         <table class="table">
             <!-- Update sorting buttons in each column header -->
-<!-- Update sorting buttons in each column header -->
             <thead>
                 <tr>
                 <th scope="col">
@@ -47,7 +49,7 @@
                     <button class="btn btn-warning btn-sort" (click)="sortColumn('rollno', 'desc')">Down</button>
                     </div>
                 </th>
-                <th scope="col">
+                <th scope="col" *ngIf="userType === 'admin'" >
                     <div>
                     Actions
                     </div>
@@ -62,9 +64,11 @@
                     <td>{{ student.age }}</td>
                     <td>{{ student.email }}</td>
                     <td>{{ student.rollno }}</td>
-                    <td>
+                    <td *ngIf="userType === 'admin'" >
                         <button class="btn btn-primary" (click)="editStudentProfile(student)">Edit</button>
-                      </td>
+                     
+                    </td>
+            
                   </tr>
             </tbody>
         </table>   
@@ -74,9 +78,50 @@
             <button class="btn btn-primary me-2" (click)="prevPage()" [disabled]="currentPage === 0">Previous</button>
             <span class="align-self-center">currentPage : {{ currentPage }}</span>
             <button class="btn btn-primary ms-2" (click)="nextPage()" [disabled]="currentPage === totalPages-1">Next</button>
-        </div>  
-    
-        
+        </div>     
+
+
+        <div class="modal" tabindex="-1" role="dialog" id="addStudentModal" [class.show]="addStudentModalOpen">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Add New Student</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeAddStudentModal()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <!-- Form for adding new student -->
+                  <form [formGroup]="newStudentForm" (ngSubmit)="addStudent()">
+                    <div class="mb-3">
+                      <label for="newStudentName" class="form-label">Name</label>
+                      <input type="text" class="form-control" id="newStudentName" formControlName="name" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="newStudentAge" class="form-label">Age</label>
+                      <input type="number" class="form-control" id="newStudentAge" formControlName="age" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="newStudentEmail" class="form-label">Email</label>
+                      <input type="email" class="form-control" id="newStudentEmail" formControlName="email" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="newStudentRollNo" class="form-label">Roll No</label>
+                      <input type="text" class="form-control" id="newStudentRollNo" formControlName="rollno" style="text-transform: uppercase;" required>
+                    </div>
+                    
+                    <div class="row">
+                      <div class="col text-end">
+                        <button type="button" class="btn btn-secondary me-2" (click)="closeAddStudentModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Student</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           
         
   

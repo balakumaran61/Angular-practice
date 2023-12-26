@@ -7,14 +7,11 @@ import { AuthModule } from './auth/auth.module';
 const routes: Routes = [
     { path: '', redirectTo: 'auth/register', pathMatch: 'full' },
     { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
-
-
     {  path: 'students', loadChildren: () => import('./student/student.module').then(m => m.StudentModule) },
     { path: 'course', component: CourseComponent },
     { path: 'home', component: HomeComponent },
-    { path:'guardian', component: GuardianComponent}
-
-  
+    { path:'guardian', component: GuardianComponent},
+    { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
 
 ];
 

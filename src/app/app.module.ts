@@ -10,7 +10,11 @@ import { CourseComponent } from './course/course.component';
 import { GuardianComponent } from './guardian/guardian.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { GuardianModalComponent } from './guardian-modal/guardian-modal.component'; 
+import { GuardianModalComponent } from './guardian-modal/guardian-modal.component';   
+import { ProfileModule } from './profile/profile.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 
@@ -28,7 +32,10 @@ import { GuardianModalComponent } from './guardian-modal/guardian-modal.componen
     AppRoutingModule, 
     StudentModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ProfileModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule
 
     
   ],

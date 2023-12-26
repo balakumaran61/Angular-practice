@@ -17,10 +17,16 @@ export class StudentService {
   const url = `${this.apiUrl}/student-pagination?page=${page}&size=${size}`;
   return this.http.get<any>(url).pipe(
     map((response) => ({
-      content: response.content, // Extract the 'content' property
-      totalPages: response.totalPages // Extract the 'totalPages' property
+      content: response.content, 
+      totalPages: response.totalPages 
     }))
-  );
+  );   
+
+
+}    
+
+addStudent(studentData: any): Observable<any> {
+  return this.http.post(`${this.apiUrl}/add-new-student`, studentData, { responseType: 'text' });
 }
     
 

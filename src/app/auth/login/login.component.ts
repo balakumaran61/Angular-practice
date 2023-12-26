@@ -13,24 +13,31 @@ export class LoginComponent implements OnInit {
     username: '',
     password: ''
   };
+
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   loginUser(): void {
-    // Your login logic here
     this.authService.loginUser(this.userData).subscribe(
       (response) => {
         console.log('Login successful:', response);
-        alert("successfully signed in");
-   
-        this.router.navigate(['/home']);
+
+        if (response.userType && response.userType !== 'error') {
+          console.log('Setting localStorage');
+          localStorage.setItem('userType', response.userType);
+          localStorage.setItem('username', response.username);
+          localStorage.setItem('token',response.token)
+          this.router.navigate(['/home']);
+        } else {
+          console.log('Login failed. UserType:', response.userType);
+          alert('Login failed. Please check your credentials.');
+        }
       },
       (error) => {
-        alert("error in  signing in");
         console.error('Login error:', error);
-
+        alert('Error in signing in');
       }
     );
   }
