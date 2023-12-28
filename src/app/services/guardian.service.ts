@@ -1,8 +1,8 @@
 // src/app/services/guardian.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { HttpClient, HttpParams,HttpHeaders ,HttpResponse  } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
@@ -32,7 +32,15 @@ export class GuardianService {
   {
     const url=`${this.apiUrl}/studentInfoByGuardianEmail/${email}`;
     return this.http.get(url);
+    }      
+    addGuardian(guardianData: any): Observable<any> {
+      const url = `${this.apiUrl}/save-guardian`;
+      return this.http.post(url, guardianData, { responseType: 'text' });
     }   
 
-
-}
+    getGuardianProfile(username: string): Observable<any> {
+      const url = `${this.apiUrl}/guardian-profile-info/${username}`;
+      return this.http.get(url);
+    }
+    
+  }

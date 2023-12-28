@@ -1,1 +1,94 @@
-<p>guardian-profile works!</p>
+<div class="card mt-5 border-0">
+    <div class="card-body p-0">
+      <!-- Guardian Profile Section -->
+      <div class="d-flex flex-column align-items-center text-center">
+        <img class="rounded-circle mt-4" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+        <h4 class="font-weight-bold mt-3">{{ guardianProfile.name }}</h4>
+        <p class="text-black-50"><i class="bi bi-envelope"></i>{{ guardianProfile.email }}</p>
+      </div>
+  
+      <!-- Guardian Profile Details Section -->
+      <div class="card mt-5 mx-auto border-0" style="width: 18rem;">
+        <div class="card-header bg-white border-0 text-center">
+          <h5 class="font-weight-bold mb-0">Guardian Profile</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-md-2">
+                <i class="bi bi-person"></i>
+              </div>
+              <div class="col-md-10">
+                <p>{{ guardianProfile.username }}</p>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-md-2">
+                <i class="bi bi-telephone"></i>
+              </div>
+              <div class="col-md-10">
+                <p>{{ guardianProfile.phoneNo }}</p>
+              </div>
+            </div>
+          </li>
+          <!-- Add more properties as needed -->
+        </ul>
+      </div>
+  
+      <!-- Student Profile Section -->
+      <div *ngIf="studentProfile" class="mt-5 border-0">
+        <!-- Student Profile Details Section -->
+        <div class="card mt-5 mx-auto border-0" style="width: 18rem;">
+          <div class="card-header bg-white border-0 text-center">
+            <h5 class="font-weight-bold mb-0">Student Profile</h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-md-2">
+                  <i class="bi bi-person"></i>
+                </div>
+                <div class="col-md-10">
+                  <p>{{ studentProfile.name }}</p>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-md-2">
+                  <i class="bi bi-calendar"></i>
+                </div>
+                <div class="col-md-10">
+                  <p>{{ studentProfile.age }}</p>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-md-2">
+                  <i class="bi bi-envelope"></i>
+                </div>
+                <div class="col-md-10">
+                  <p>{{ studentProfile.email }}</p>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-md-2">
+                  <i class="bi bi-person"></i>
+                </div>
+                <div class="col-md-10">
+                  <p>{{ studentProfile.rollno }}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  

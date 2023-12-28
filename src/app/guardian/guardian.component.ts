@@ -1,6 +1,9 @@
 // src/app/components/guardian/guardian.component.ts
 import { Component, OnInit } from '@angular/core';
 import { GuardianService } from '../services/guardian.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { NgModel } from '@angular/forms';
 declare var window:any;
 
@@ -21,19 +24,30 @@ export class GuardianComponent implements OnInit {
   selectedGuardian: any={ name: '', email: '', phoneNo: '' }; // This property will hold the selected guardian
   studentInfo: any; // Adjust the type based on the actual response structure
   showSuccessAlert = false;
-  showErrorAlert = false; 
+  showErrorAlert = false;    
+  formAddGuardianModal:any;
+  newGuardianForm!: FormGroup;
+  addGuardianModalOpen = false;
   get userType(): string {
     // Retrieve user type from local storage
     return localStorage.getItem('userType') || 'error';
   }
 
-  constructor(private guardianService: GuardianService) {}
+  constructor(private guardianService: GuardianService, private fb: FormBuilder,private router: Router) {}
 
   ngOnInit(): void {
     this.loadGuardians();
     this.formModal=new window.bootstrap.Modal(
      document.getElementById("exampleModal")
-    );
+    );   
+    
+    this.newGuardianForm = this.fb.group({
+      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]*$/)]],
+      username: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      phoneNo: ['', [Validators.required]],
+      studentRollno: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{7,8}$/)]]
+    });
   }
 
   loadGuardians() {
@@ -74,7 +88,8 @@ export class GuardianComponent implements OnInit {
    closeModal()
    {
     this.formModal.hide();
-   }
+   }   
+
 
    saveGuardianChanges() {
     // Call the service to update the guardian
@@ -115,7 +130,9 @@ export class GuardianComponent implements OnInit {
         
       }
     )
+  }   
+  navigateToAddGuardian() {
+    this.router.navigate(['/addGuardian']);
   }
-
 
 }

@@ -13,7 +13,9 @@ import { FormsModule } from '@angular/forms';
 import { GuardianModalComponent } from './guardian-modal/guardian-modal.component';   
 import { ProfileModule } from './profile/profile.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';  
+import { TeacherModule } from './teacher/teacher.module';
+import { AddGuardianComponent } from './add-guardian/add-guardian.component';
 
 
 
@@ -25,7 +27,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     CourseComponent,
     GuardianComponent,
-    GuardianModalComponent
+    GuardianModalComponent,
+    AddGuardianComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ProfileModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TeacherModule
 
     
   ],

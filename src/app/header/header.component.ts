@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
       case 'guardian':
         return '/profile/guardian-profile';
       default:
-        return '/'; // Default link if userType is not recognized
+        return '/'; 
     }
   }   
 
