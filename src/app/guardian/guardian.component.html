@@ -1,45 +1,48 @@
   <!-- src/app/components/guardian/guardian.component.html -->
 <div class="container mt-3" style="max-width: 800px;">
+  <div class="d-flex justify-content-between align-items-center mb-2">
     <h2>Guardian List</h2>
+    <button class="btn btn-primary" (click)="navigateToAddGuardian()">Add Guardian</button>
+  </div>
+  
+<br>
     <div class="input-group mb-3">
       <input type="text" class="form-control" placeholder="Search by Name, Email, or Phone" [(ngModel)]="searchText" (input)="onSearchChange()">
       <div class="input-group-append">
       </div>
     </div>
   
+   
     <table class="table table-sm">
       <thead>
         <tr>
           <th style="width: 5%;">#</th>
-          <th style="width: 30%;">
-          
-            Name  
-             <button class="btn btn-link" (click)="sort('name', 'asc')" style="margin-left: -5px;">
-              <i class="bi bi-arrow-up arrow-icon"></i>
-            </button>
-            <button class="btn btn-link" (click)="sort('name', 'desc')" style="margin-left: -20px;">
-              <i class="bi bi-arrow-down arrow-icon"></i>
-            </button>
+          <th style="width: 25%;">
+              Name
+              <button class="btn btn-link" (click)="sort('name', 'asc')" style="margin-left: -5px;">
+                  <i class="bi bi-arrow-up arrow-icon"></i>
+              </button>
+              <button class="btn btn-link" (click)="sort('name', 'desc')" style="margin-left: -20px;">
+                  <i class="bi bi-arrow-down arrow-icon"></i>
+              </button>
+          </th>
+          <th style="width: 25%;">
+              Email
+              <button class="btn btn-link" (click)="sort('email', 'asc')" style="margin-left: -5px;">
+                  <i class="bi bi-arrow-up arrow-icon"></i>
+              </button>
+              <button class="btn btn-link" (click)="sort('email', 'desc')" style="margin-left: -20px;">
+                  <i class="bi bi-arrow-down arrow-icon"></i>
+              </button>
           </th>
           <th style="width: 30%;">
-            Email
-            <button class="btn btn-link" (click)="sort('email', 'asc')" style="margin-left: -5px;">
-              <i class="bi bi-arrow-up arrow-icon"></i>
-            </button>
-            <button class="btn btn-link" (click)="sort('email', 'desc')" style="margin-left: -20px;">
-              <i class="bi bi-arrow-down arrow-icon"></i>
-            </button>
-           
-          </th>
-          <th style="width: 35%;">
-            Phone Number
-            <button class="btn btn-link" (click)="sort('phoneNo', 'asc')"style="margin-left: -5px;">
-              <i class="bi bi-arrow-up arrow-icon"></i>
-            </button>
-            <button class="btn btn-link" (click)="sort('phoneNo', 'desc')"style="margin-left: -20px;">
-              <i class="bi bi-arrow-down arrow-icon"></i>
-            </button>
-            
+              Phone Number
+              <button class="btn btn-link" (click)="sort('phoneNo', 'asc')" style="margin-left: -5px;">
+                  <i class="bi bi-arrow-up arrow-icon"></i>
+              </button>
+              <button class="btn btn-link" (click)="sort('phoneNo', 'desc')" style="margin-left: -20px;">
+                  <i class="bi bi-arrow-down arrow-icon"></i>
+              </button>
           </th>
         </tr>
       </thead>
@@ -66,115 +69,117 @@
       </li>
     </ul>   
 
-  <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Guardian</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: red;"></button>
-      </div>
-      <div class="modal-body">
-        <!-- First Accordion: Update Form -->
-        
-        <div class="accordion" id="updateFormAccordion">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#updateForm" aria-expanded="true" aria-controls="updateForm">
-                Update Guardian Information
-              </button>
-            </h2>
-            <div id="updateForm" class="accordion-collapse collapse show" data-bs-parent="#updateFormAccordion">
-              <div class="accordion-body">
-                    <!-- Bootstrap Alert for Success Message -->
-                    <div *ngIf="showSuccessAlert" class="alert alert-success" role="alert">
-                      Guardian updated successfully!
-                    </div>
+  <!-- Modal for editing guardian-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Guardian</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: red;"></button>
+          </div>
+          <div class="modal-body">
+            <!-- First Accordion: Update Form -->
+            
+            <div class="accordion" id="updateFormAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#updateForm" aria-expanded="true" aria-controls="updateForm">
+                    Update Guardian Information
+                  </button>
+                </h2>
+                <div id="updateForm" class="accordion-collapse collapse show" data-bs-parent="#updateFormAccordion">
+                  <div class="accordion-body">
+                        <!-- Bootstrap Alert for Success Message -->
+                        <div *ngIf="showSuccessAlert" class="alert alert-success" role="alert">
+                          Guardian updated successfully!
+                        </div>
 
-                    <!-- Bootstrap Alert for Error Message -->
-                    <div *ngIf="showErrorAlert" class="alert alert-danger" role="alert">
-                      Error updating guardian. Please try again.
-                    </div>
-                <form #editForm="ngForm" (ngSubmit)="saveGuardianChanges()">
-                  <div class="mb-3">
-                    <label for="editName" class="form-label">Name:</label>
-                    <input type="text" id="editName" class="form-control" [(ngModel)]="selectedGuardian.name" name="name" required>
+                        <!-- Bootstrap Alert for Error Message -->
+                        <div *ngIf="showErrorAlert" class="alert alert-danger" role="alert">
+                          Error updating guardian. Please try again.
+                        </div>
+                    <form #editForm="ngForm" (ngSubmit)="saveGuardianChanges()">
+                      <div class="mb-3">
+                        <label for="editName" class="form-label">Name:</label>
+                        <input type="text" id="editName" class="form-control" [(ngModel)]="selectedGuardian.name" name="name" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="editEmail" class="form-label">Email:</label>
+                        <input type="email" id="editEmail" class="form-control" [(ngModel)]="selectedGuardian.email" name="email" required disabled>
+                      </div>
+                      <div class="mb-3">
+                        <label for="editPhone" class="form-label">Phone Number:</label>
+                        <input type="text" id="editPhone" class="form-control" [(ngModel)]="selectedGuardian.phoneNo" name="phoneNo" required>
+                      </div>
+                      <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary" >Save Changes</button>
+                      </div>
+                    </form>
                   </div>
-                  <div class="mb-3">
-                    <label for="editEmail" class="form-label">Email:</label>
-                    <input type="email" id="editEmail" class="form-control" [(ngModel)]="selectedGuardian.email" name="email" required disabled>
-                  </div>
-                  <div class="mb-3">
-                    <label for="editPhone" class="form-label">Phone Number:</label>
-                    <input type="text" id="editPhone" class="form-control" [(ngModel)]="selectedGuardian.phoneNo" name="phoneNo" required>
-                  </div>
-                  <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary" >Save Changes</button>
-                  </div>
-                </form>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Second Accordion: Random Message -->
-        <div class="accordion mt-3" id="randomMessageAccordion">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  Student Information
-                </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#updateFormAccordion">
-                <div class="accordion-body">  
-                  <!--card starts -->
-                  <div class="card mx-auto" style="width: 18rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
-                    <img src="https://via.placeholder.com/450" class="card-img-top" alt="Student Photo"
-                      style="width: 100%; height: 200px; object-fit: cover;">
-                    <div class="card-body text-center">
-                      <h5 class="card-title">{{ studentInfo?.name }}</h5>
-                      <div class="text-left">
-                        <p class="card-text">
-                          <i class="bi bi-person-fill text-primary"></i> {{ studentInfo?.rollno }}
-                          <span style="margin-left: 10px;"></span>
-                          <i class="bi bi-calendar3 text-danger"></i> {{ studentInfo?.age }}
-                        </p>
-                        <p class="card-text">
-                          <i class="bi bi-envelope-fill text-success"></i> {{ studentInfo?.email }}
-                        </p>
-                        <p class="card-text">
-                          <i class="bi bi-book"></i>
-                          <span *ngFor="let course of studentInfo?.enrolledCourses.slice(0, 2); let i = index">
-                            {{ course }}
-                            <span *ngIf="i < 1 && i < studentInfo?.enrolledCourses.length - 1">, </span>
-                          </span>
-                          <ng-container *ngIf="studentInfo?.enrolledCourses.length > 2">
-                            <span *ngIf="studentInfo?.enrolledCourses.length > 3"> +</span> and {{ studentInfo?.enrolledCourses.length - 2 }} more courses
-                          </ng-container>
-                        </p>
+            <!-- Second Accordion: Random Message -->
+            <div class="accordion mt-3" id="randomMessageAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Student Information
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#updateFormAccordion">
+                    <div class="accordion-body">  
+                      <!--card starts -->
+                      <div class="card mx-auto" style="width: 18rem; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+                        <img src="https://via.placeholder.com/450" class="card-img-top" alt="Student Photo"
+                          style="width: 100%; height: 200px; object-fit: cover;">
+                        <div class="card-body text-center">
+                          <h5 class="card-title">{{ studentInfo?.name }}</h5>
+                          <div class="text-left">
+                            <p class="card-text">
+                              <i class="bi bi-person-fill text-primary"></i> {{ studentInfo?.rollno }}
+                              <span style="margin-left: 10px;"></span>
+                              <i class="bi bi-calendar3 text-danger"></i> {{ studentInfo?.age }}
+                            </p>
+                            <p class="card-text">
+                              <i class="bi bi-envelope-fill text-success"></i> {{ studentInfo?.email }}
+                            </p>
+                            <p class="card-text">
+                              <i class="bi bi-book"></i>
+                              <span *ngFor="let course of studentInfo?.enrolledCourses.slice(0, 2); let i = index">
+                                {{ course }}
+                                <span *ngIf="i < 1 && i < studentInfo?.enrolledCourses.length - 1">, </span>
+                              </span>
+                              <ng-container *ngIf="studentInfo?.enrolledCourses.length > 2">
+                                <span *ngIf="studentInfo?.enrolledCourses.length > 3"> +</span> and {{ studentInfo?.enrolledCourses.length - 2 }} more courses
+                              </ng-container>
+                            </p>
+                          </div>
+                      
+                          <div class="mt-3">
+                            <a href="#" class="btn btn-primary">
+                              <i class="bi bi-eye-fill"></i> View
+                            </a>
+                          </div>
+                        </div>
                       </div>
-                  
-                      <div class="mt-3">
-                        <a href="#" class="btn btn-primary">
-                          <i class="bi bi-eye-fill"></i> View
-                        </a>
-                      </div>
+                      
+                        
+                      
+                      
+                      
+                        <!--card ends-->
+
                     </div>
-                  </div>
-                  
-                     
-                  
-                  
-                  
-                    <!--card ends-->
-
                 </div>
             </div>
+            
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()" data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
-        
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeModal()" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
-  </div>
-</div>
+<!--modal for new  guardian -->
+

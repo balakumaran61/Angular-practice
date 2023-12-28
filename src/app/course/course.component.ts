@@ -20,6 +20,7 @@ export class CourseComponent implements OnInit {
     this.courseService.getCourses().subscribe(
       (data) => {
         this.courses = data;
+        console.log(data)
         // Add serial number to each course
         this.courses.forEach((course, index) => {
           course.serialNumber = index + 1;

@@ -26,11 +26,12 @@ export class StudentDetailsComponent implements OnInit
   selectedPageSize: number = 10;    
   selectedColumn: string | null = null;
   sortOrder: 'asc' | 'desc' = 'asc';   
+
   get userType(): string {
-    // Retrieve user type from local storage
     return localStorage.getItem('userType') || 'error';
   }
-  addStudentModalOpen = false;
+  addStudentModalOpen = false;     
+  searchString: string = '';
 
 
 
@@ -38,68 +39,74 @@ export class StudentDetailsComponent implements OnInit
 
   
 
-  constructor(private studentService: StudentService,private router: Router,private fb: FormBuilder) { }
-
-  ngOnInit(): void 
-  {   
-    this.fetchStudentDetails(this.currentPage,this.selectedPageSize);  
-    this.formModal=new window.bootstrap.Modal(
-      document.getElementById("addStudentModal")
-     ); 
+  constructor(private studentService: StudentService,private router: Router,private fb: FormBuilder) { }  
+  ngOnInit(): void {   
+    this.fetchStudentDetails(this.currentPage);
+    this.formModal = new window.bootstrap.Modal(document.getElementById("addStudentModal")); 
     this.newStudentForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]*$/)]],
+      age: ['', [Validators.required, Validators.min(1), Validators.max(200)]],
       email: ['', [Validators.required, Validators.email]],
-      rollno: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(1)]],
+      rollno: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9]{7,8}$/),
+          Validators.minLength(7),
+          Validators.maxLength(8),
+        ],
+      ],
     });
-
-    
-  }      
-
+  }
+  
+  search(): void {
+    this.currentPage = 0;
+    this.fetchStudentDetails(this.currentPage);
+  }
   
   onPageSizeChange(): void {
     // Reset to the first page when page size changes
     this.currentPage = 0;
-    this.fetchStudentDetails(this.currentPage, this.selectedPageSize);
-    
+    this.fetchStudentDetails(this.currentPage);
   }
-
-  fetchStudentDetails(page: number, size: number): void {
-    this.studentService.getStudentDetails(page, size).subscribe(
+  
+  fetchStudentDetails(page: number): void {
+    this.studentService.getStudentDetails(page, this.selectedPageSize, this.searchString).subscribe(
       (data) => {
         console.log('API Response:', data);
         this.students = data.content;
         this.totalPages = data.totalPages;
       },
       (error) => {  
-      
         console.error('Error fetching student details:', error);
       }
     );
   }
+  
   editStudentProfile(student: any) {
     // Pass the student's rollno to the profile component
     this.router.navigate(['/students/student-profile', student.rollno]);
   }
+  
   changePage(page: number): void {
     this.currentPage = page; 
-    this.fetchStudentDetails(this.currentPage, this.pageSize);
+    this.fetchStudentDetails(this.currentPage);
   }     
-
+  
   nextPage(): void {
-    if (this.currentPage < this.totalPages ) {
+    if (this.currentPage < this.totalPages - 1) {
       this.currentPage++;
-      this.fetchStudentDetails(this.currentPage, this.pageSize);
+      this.fetchStudentDetails(this.currentPage);
     }
   }
-
+  
   prevPage(): void {
-    if (this.currentPage >= 1) {
+    if (this.currentPage > 0) {
       this.currentPage--;
-      this.fetchStudentDetails(this.currentPage, this.pageSize);
+      this.fetchStudentDetails(this.currentPage);
     }
-  }   
-  // ...
+  }
+  
 
 sortColumn(column: string, order: 'asc' | 'desc'): void {
   // Toggle sort order if the same column is clicked
@@ -149,8 +156,12 @@ sortColumn(column: string, order: 'asc' | 'desc'): void {
   }  
 
 
- addStudent() {
-  // Call the service to add a new student
+ addStudent() {   
+
+  if (this.newStudentForm.invalid) {
+    alert('Please fill in all required fields with valid data.');
+    return;
+  }
   const studentData = this.newStudentForm.value;
   this.studentService.addStudent(studentData).subscribe(
     (response) => {

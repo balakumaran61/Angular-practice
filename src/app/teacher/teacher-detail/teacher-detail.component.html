@@ -1,0 +1,163 @@
+<!-- src/app/teacher/teacher-detail/teacher-detail.component.html -->
+<div class="container mt-3" style="max-width: 800px;">
+    <h2>Teacher List</h2>
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search by Name, Email, or Mobile no"
+        [(ngModel)]="searchText"
+        (input)="onSearchChange()"
+      />
+      <div class="input-group-append"></div>
+    </div>
+  
+    <table class="table table-sm">
+      <thead>
+        <tr>
+            <!-- Adjusted column widths as needed -->
+            <th style="width: 5%;">#</th>
+            <th style="width: 16%;"> <!-- Slightly increased the width for Name -->
+                Name
+                <button class="btn btn-link" (click)="sort('name', 'asc')" style="margin-left: -5px;">
+                    <i class="bi bi-arrow-up arrow-icon"></i>
+                </button>
+                <button class="btn btn-link" (click)="sort('name', 'desc')" style="margin-left: -20px;">
+                    <i class="bi bi-arrow-down arrow-icon"></i>
+                </button>
+            </th>
+            <th style="width: 24%;"> <!-- Slightly increased the width for Email -->
+                Email
+                <button class="btn btn-link" (click)="sort('email', 'asc')" style="margin-left: -5px;">
+                    <i class="bi bi-arrow-up arrow-icon"></i>
+                </button>
+                <button class="btn btn-link" (click)="sort('email', 'desc')" style="margin-left: -20px;">
+                    <i class="bi bi-arrow-down arrow-icon"></i>
+                </button>
+            </th>
+            <th style="width: 20%;"> <!-- Increased the width for Phone Number -->
+              mobile
+                <button class="btn btn-link" (click)="sort('phoneNo', 'asc')" style="margin-left: -5px;">
+                    <i class="bi bi-arrow-up arrow-icon"></i>
+                </button>
+                <button class="btn btn-link" (click)="sort('phoneNo', 'desc')" style="margin-left: -20px;">
+                    <i class="bi bi-arrow-down arrow-icon"></i>
+                </button>
+            </th>
+            <th style="width: 15%;"> <!-- Decreased the width for Age -->
+                Age
+                <button class="btn btn-link" (click)="sort('age', 'asc')" style="margin-left: -5px;">
+                    <i class="bi bi-arrow-up arrow-icon"></i>
+                </button>
+                <button class="btn btn-link" (click)="sort('age', 'desc')" style="margin-left: -20px;">
+                    <i class="bi bi-arrow-down arrow-icon"></i>
+                </button>
+            </th>
+            <th style="width: 20%;"> <!-- Decreased the width for Gender -->
+                Gender
+                <button class="btn btn-link" (click)="sort('gender', 'asc')" style="margin-left: -5px;">
+                    <i class="bi bi-arrow-up arrow-icon"></i>
+                </button>
+                <button class="btn btn-link" (click)="sort('gender', 'desc')" style="margin-left: -20px;">
+                    <i class="bi bi-arrow-down arrow-icon"></i>
+                </button>
+            </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let teacher of teachers; let i = index" (dblclick)=" openModal(teacher)">
+          <td>{{ i + 1 }}</td>
+          <td>{{ teacher.name }}</td> 
+          <td>{{ teacher.email }}</td>
+          <td>{{ teacher.phoneNo }}</td>
+          <td>{{ teacher.age }}</td> <!-- Corrected order -->
+          <td>{{ teacher.gender }}</td> <!-- Corrected order -->
+        </tr>
+      </tbody>
+    </table>
+  
+    <ul class="pagination d-flex justify-content-center">
+      <li class="page-item" *ngFor="let page of getPages()">
+        <a
+          class="page-link"
+          (click)="onPageChange(page)"
+          [class.active]="page === currentPage"
+          [attr.disabled]="page === currentPage ? true : null"
+        >
+          {{ page + 1 }}
+        </a>
+      </li>
+    </ul>
+   
+    <!-- modal for updating -->
+    <div class="modal fade" id="teacherModal" tabindex="-1" aria-labelledby="teacherModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="teacherModalLabel">Edit Teacher</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: red;"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Bootstrap Alert for Success Message -->
+            <div *ngIf="showSuccessAlert" class="alert alert-success" role="alert">
+              Teacher updated successfully!
+            </div>
+  
+            <!-- Bootstrap Alert for Error Message -->
+            <div *ngIf="showErrorAlert" class="alert alert-danger" role="alert">
+              Error updating teacher. Please try again.
+            </div>  
+            <!--form -->
+            <form #editForm="ngForm" (ngSubmit)="saveTeacherChanges()">
+                <div class="mb-3">
+                  <label for="editName" class="form-label">Name:</label>
+                  <input type="text" id="editName" class="form-control" [(ngModel)]="selectedTeacher.name" name="name" required pattern="[a-zA-Z ]+">
+                  <div *ngIf="editForm.controls['name']?.errors?.required" class="text-danger">Name is required.</div>
+                  <div *ngIf="editForm.controls['name']?.errors?.pattern" class="text-danger">Invalid characters. Only letters and spaces are allowed.</div>
+                </div>
+                <div class="mb-3">
+                  <label for="editAge" class="form-label">Age:</label>
+                  <input type="number" id="editAge" class="form-control" [(ngModel)]="selectedTeacher.age" name="age" required min="1" max="200">
+                  <div *ngIf="editForm.controls['age']?.errors?.required" class="text-danger">Age is required.</div>
+                  <div *ngIf="editForm.controls['age']?.errors?.min || editForm.controls['age']?.errors?.max" class="text-danger">Age should be between 1 and 200.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="editGender" class="form-label">Gender:</label>
+                    <select id="editGender" class="form-control" [(ngModel)]="selectedTeacher.gender" name="gender" required>
+                      <option value="" disabled>Select Gender</option>
+                      <option value="MALE">MALE</option>
+                      <option value="FEMALE">FEMALE</option>
+                    </select>
+                    <!-- Gender Validation Message -->
+                    <div *ngIf="editForm.controls['gender']?.errors?.required" class="text-danger">Gender is required.</div>
+                  </div>
+                  
+                <div class="mb-3">
+                  <label for="editPhone" class="form-label">Phone Number:</label>
+                  <input type="tel" id="editPhone" class="form-control" [(ngModel)]="selectedTeacher.phoneNo" name="phoneNo" required pattern="[0-9]{10}">
+                  <div *ngIf="editForm.controls['phoneNo']?.errors?.required" class="text-danger">Phone number is required.</div>
+                  <div *ngIf="editForm.controls['phoneNo']?.errors?.pattern" class="text-danger">Invalid phone number. It should be 10 digits numeric input.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="editEmail" class="form-label">Email:</label>
+                    <input  type="email" id="editEmail" class="form-control" [(ngModel)]="selectedTeacher.email" name="email" required  pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+                    <div *ngIf="editForm.controls['email']?.errors?.required" class="text-danger">Email is required.</div>
+                    <div *ngIf="editForm.controls['email']?.errors?.pattern" class="text-danger">Invalid email address.</div>
+                  </div>
+                  
+                <div class="mb-3">
+                  <label for="editUsername" class="form-label">Username:</label>
+                  <input type="text" id="editUsername" class="form-control" [(ngModel)]="selectedTeacher.username" name="username" required readonly>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary" style="margin-right: 10px;" [disabled]="editForm.invalid">Save Changes</button>
+                  <button type="button" class="btn btn-secondary" (click)="closeModal()" data-bs-dismiss="modal">Close</button>
+                </div>
+              </form>
+              
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>

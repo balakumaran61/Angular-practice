@@ -1,17 +1,37 @@
     
     <div class="container mt-5">
         <h2>Student Information Table</h2>
-        <label for="pageSize">No of Entries :</label>
-        <select id="pageSize" [(ngModel)]="selectedPageSize" (change)="onPageSizeChange()">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-        </select>
-        <div class="d-flex justify-content-end mb-3">
+        
+        <br>
+        
+        <div class="row">
+          <!-- No of Entries dropdown -->
+          <div class="col-md-2">
+            <label for="pageSize">No of Entries :</label>
+            <select id="pageSize" [(ngModel)]="selectedPageSize" (change)="onPageSizeChange()">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+            </select>
+          </div>
+        
+          <!-- Search bar -->
+          <div class="col-md-6">
+            <input type="text" id="searchInput" placeholder="Search by Name, Email, or by Rollno" class="form-control custom-search" [(ngModel)]="searchString" (input)="search()">
+            <label for="searchInput" class="form-label"></label>
+          </div>
+          
+        
+          <!-- Add New Student button -->
+          <div class="col-md-4 text-md-end" *ngIf="userType === 'admin'">
             <button class="btn btn-primary" (click)="openAddStudentModal()">Add New Student</button>
           </div>
+        </div>
+        
 
+        
+        
         <table class="table">
             <!-- Update sorting buttons in each column header -->
             <thead>
@@ -49,7 +69,7 @@
                     <button class="btn btn-warning btn-sort" (click)="sortColumn('rollno', 'desc')">Down</button>
                     </div>
                 </th>
-                <th scope="col" *ngIf="userType === 'admin'" >
+                <th scope="col" *ngIf="userType === 'admin' || userType === 'teacher'">
                     <div>
                     Actions
                     </div>
@@ -64,7 +84,7 @@
                     <td>{{ student.age }}</td>
                     <td>{{ student.email }}</td>
                     <td>{{ student.rollno }}</td>
-                    <td *ngIf="userType === 'admin'" >
+                    <td *ngIf="userType === 'admin' || userType === 'teacher'" >
                         <button class="btn btn-primary" (click)="editStudentProfile(student)">Edit</button>
                      
                     </td>
@@ -96,20 +116,35 @@
                     <div class="mb-3">
                       <label for="newStudentName" class="form-label">Name</label>
                       <input type="text" class="form-control" id="newStudentName" formControlName="name" required>
+                      <div *ngIf="newStudentForm.get('name')?.invalid && newStudentForm.get('name')?.touched" class="text-danger">
+                        Name can only contain letters and spaces.
+                      </div>
                     </div>
+                  
                     <div class="mb-3">
                       <label for="newStudentAge" class="form-label">Age</label>
                       <input type="number" class="form-control" id="newStudentAge" formControlName="age" required>
+                      <div *ngIf="(newStudentForm.get('age')?.invalid && newStudentForm.get('age')?.touched) || newStudentForm.get('age')?.hasError('max')" class="text-danger">
+                        Age must be between 1 and 200.
+                      </div>
                     </div>
+                  
                     <div class="mb-3">
                       <label for="newStudentEmail" class="form-label">Email</label>
                       <input type="email" class="form-control" id="newStudentEmail" formControlName="email" required>
+                      <div *ngIf="newStudentForm.get('email')?.invalid && newStudentForm.get('email')?.touched" class="text-danger">
+                        Please enter a valid email address.
+                      </div>
                     </div>
+                  
                     <div class="mb-3">
                       <label for="newStudentRollNo" class="form-label">Roll No</label>
                       <input type="text" class="form-control" id="newStudentRollNo" formControlName="rollno" style="text-transform: uppercase;" required>
+                      <div *ngIf="newStudentForm.get('rollno')?.invalid && newStudentForm.get('rollno')?.touched" class="text-danger">
+                        Roll No must be 7 to 8 digits.
+                      </div>
                     </div>
-                    
+                  
                     <div class="row">
                       <div class="col text-end">
                         <button type="button" class="btn btn-secondary me-2" (click)="closeAddStudentModal()">Cancel</button>
@@ -117,6 +152,8 @@
                       </div>
                     </div>
                   </form>
+                  
+                  
                 </div>
               </div>
             </div>

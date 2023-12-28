@@ -12,18 +12,15 @@ export class StudentService {
 
   constructor(private http: HttpClient) { }     
   
- // student.service.ts
- getStudentDetails(page: number, size: number): Observable<{ content: any[], totalPages: number }> {
-  const url = `${this.apiUrl}/student-pagination?page=${page}&size=${size}`;
-  return this.http.get<any>(url).pipe(
-    map((response) => ({
-      content: response.content, 
-      totalPages: response.totalPages 
-    }))
-  );   
-
-
-}    
+  getStudentDetails(page: number, size: number, searchString: string): Observable<{ content: any[], totalPages: number }> {
+    const url = `${this.apiUrl}/student-pagination?page=${page}&size=${size}&searchString=${searchString}`;
+    return this.http.get<any>(url).pipe(
+      map((response) => ({
+        content: response.content, 
+        totalPages: response.totalPages 
+      }))
+    );
+  } 
 
 addStudent(studentData: any): Observable<any> {
   return this.http.post(`${this.apiUrl}/add-new-student`, studentData, { responseType: 'text' });
