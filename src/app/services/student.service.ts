@@ -40,6 +40,11 @@ addStudent(studentData: any): Observable<any> {
   updateStudent(rollno: string, updatedData: any): Observable<any> {
     const url = `${this.apiUrl}/updateStudent/${rollno}`;
     return this.http.put(url, updatedData);
+  }    
+
+  getStudentProfile(rollno: string): Observable<any> {
+    const url = `${this.apiUrl}/student-profile-info/${rollno}`;
+    return this.http.get(url);
   }
   
 }

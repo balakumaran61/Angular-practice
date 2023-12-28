@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';  
+import { HttpErrorResponse } from '@angular/common/http';
+
 import { GuardianService } from '../services/guardian.service'; 
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -45,13 +47,18 @@ export class AddGuardianComponent implements OnInit {
           // Log the full error details to the console
           console.error('Error adding guardian:', error);
   
-          // Display a generic error alert
-          alert('Error adding guardian. Please check the console for details.');
+          // Display the error message from the server
+          if (error instanceof HttpErrorResponse) {
+            alert('Error adding guardian: ' + error.error);
+          } else {
+            alert('Error adding guardian.check the credincitials.');
+          }
         }
       );
     }
   }
   
+
   
   
   

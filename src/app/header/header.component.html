@@ -17,11 +17,11 @@
   
         <div class="collapse navbar-collapse" id="navbarNav">
           <!-- User-specific content -->
-          <div *ngIf="userType === 'student' || userType === 'teacher' || userType === 'guardian' || userType === 'admin'"
-            class="text-white d-flex align-items-center">
-            <i [ngClass]="{'bi bi-person': userType === 'student' || userType === 'teacher', 'bi-shield': userType === 'guardian', 'bi-gear': userType === 'admin'}"></i>
-            <p class="mb-0 ml-2">Welcome, {{ userType | titlecase }}!</p>
+          <div class="text-white d-flex align-items-center">
+            <i class="bi bi-person"></i>
+            <p class="mb-0 ml-2">{{ userType }}</p>
           </div>
+      
   
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">

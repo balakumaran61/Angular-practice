@@ -36,6 +36,11 @@ export class GuardianService {
     addGuardian(guardianData: any): Observable<any> {
       const url = `${this.apiUrl}/save-guardian`;
       return this.http.post(url, guardianData, { responseType: 'text' });
+    }   
+
+    getGuardianProfile(username: string): Observable<any> {
+      const url = `${this.apiUrl}/guardian-profile-info/${username}`;
+      return this.http.get(url);
     }
     
   }

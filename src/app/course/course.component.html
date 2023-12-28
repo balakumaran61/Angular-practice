@@ -5,11 +5,14 @@
       <div class="card mb-4" style="background-color: #f8d7da; border-color: #f5c6cb;">
         <div class="card-body">
           <h5 class="card-title text-dark">{{ course.name }}</h5>
-          <p class="card-text text-muted">Code: {{ course.course_code }}</p>
+          <p class="card-text text-muted"> {{ course.course_code }}</p>
           <p class="card-text text-success">Fees: Rs.{{ course.fees }}</p>
         </div>
         <div class="card-footer bg-transparent border-top-0">
-          <button class="btn btn-primary">Enroll Now</button>
+          <button class="btn btn-primary" *ngIf="userType === 'admin'">Assign to Teacher</button>
+          <button class="btn btn-primary" *ngIf="userType === 'teacher'">View Students</button>
+          <button class="btn btn-primary" *ngIf="userType === 'student'">Enroll Now</button>
+          <button class="btn btn-primary" *ngIf="userType === 'guardian'">View Ward's Progress</button>
         </div>
       </div>
     </div>

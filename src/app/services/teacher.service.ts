@@ -27,6 +27,10 @@ export class TeacherService {
 updateTeacher(username: string, updatedTeacher: any): Observable<any> {
   const url = `${this.apiUrl}/update-teacher/${username}`;
   return this.http.put(url, updatedTeacher, { responseType: 'text' });
+}   
+getTeacherProfile(username: string): Observable<any> {
+  const url = `${this.apiUrl}/teacher-profile/${username}`;
+  return this.http.get(url);
 }
 
 }

@@ -8,6 +8,11 @@ import { CourseService } from '../course.service';
 })
 export class CourseComponent implements OnInit {
   courses: any[] = [];
+  get userType(): string {
+    // Retrieve user type from local storage
+    return localStorage.getItem('userType') || 'error';
+  }
+  
 
 
   constructor(private courseService: CourseService) { }
